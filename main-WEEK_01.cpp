@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
-using namespace std ;
+#include <regex>
+
+using namespace std;
 
 
 
@@ -51,17 +53,17 @@ int test_elvis() {
 
 
 int test_concat() {
-	
+
 	string first("1st"), second("2nd");
 
-	string all = first + " " +  second;
+	string all = first + " " + second;
 	cout << all << endl;
 
 	return 0;
 }
 
 int test_password() {
-	
+
 	string pwd("****");
 	string verif("0000");
 	string all("");
@@ -71,8 +73,8 @@ int test_password() {
 
 	cin >> pwd;
 
-	verify:
-	
+verify:
+
 	cout << "Enter it again please : ";
 	cin >> verif;
 
@@ -81,8 +83,9 @@ int test_password() {
 	string msg;
 	if (verif == pwd) {
 		failed = 0;
-		msg = "	Correct"; 
-	}else {
+		msg = "	Correct";
+	}
+	else {
 		msg = "	Does not match";
 	}
 	cout << msg << endl;
@@ -99,23 +102,19 @@ int test_password() {
 
 int test_strClass() {
 
-	/*
+	
 	string str = "";
-	
-	
+
+	/*
 	getline(cin, str);
 	cout << str << endl;
 
 	getline(cin, str, 'a');
 	cout << str;
-	
+
 
 	cout << "////////" << endl;
-	*/
-
-
-
-	/*
+	
 	string input;
 	cout << "enter any string :" ;
 	cin >> input;
@@ -126,21 +125,24 @@ int test_strClass() {
 	*/
 
 
-	string str = "012345";
+	str = "012345";
 	cout << "set 'str' var to '012435'" << endl;
 	str.erase(1, 4);
 	cout << "str.erase(1,4) >>> " << "'" + str + "'" << endl;
 
-	str.clear();
-	cout << "str.clear() >>> " << "'" + str + "'" << endl;
 
-	
+	str.empty();
+	cout << "str.empty() >>> " << str.empty() << endl; // returns 0
+
+	str.clear();
+	cout << "str.clear() >>> " << "'" + str + "'" << endl; // return empty string
+
 	string str2("abcde");
 	str.swap(str2);
 	cout << "set str var to 'abcde'" << endl;
 
 
-	str[2] = toupper(str[2]) ;
+	str[2] = toupper(str[2]);
 	cout << "toupper(str[2]) >>> " << "'" + str + "'" << endl;
 	str[2] = tolower(str[2]);
 	cout << "tolower(str[2]) >>> " << "'" + str + "'" << endl;
@@ -159,16 +161,47 @@ int test_strClass() {
 
 	str.insert(3, "123456789");
 	cout << "str.insert(3, '123') " << "'" + str + "'" << endl;
-	
+
+
+	cout << "isdigit(str[0]) " << isdigit(str[0]) << endl; // 0
+	cout << "isdigit(str[4]) " << isdigit(str[4]) << endl; // 4 ??? ... anyway...
+
+	cout << "isalpha(str[0]) " << isalpha(str[0]) << endl; // 2 ??? alphaindex then ... 
+	cout << "isalpha(str[4]) " << isalpha(str[4]) << endl; // 0 ... kind of 'false'
+
+
+
+
 	str.replace(3, 9, "XXXXXXXXX");
 	cout << "str.replace(3,6, 'XXXXXXXXX') " << "'" + str + "'" << endl;
 
-	
+
 	cout << "str.substr(0, 3) " << "'" + str.substr(0, 3) + "'" << endl;
 	cout << "str.substr(3) " << "'" + str.substr(3) + "'" << endl;
 
 	cout << "str.find('k') " << str.find('k') << endl;
 
+	cout << "str.front() " << str.front() << endl; 
+	cout << "str.back() " << str.back() << endl; 
+
+
+	cout << "set str var to 'kkk abc aaa'" << endl;
+	str = "aaa abc kkk";
+
+	
+	cout << "str.find('f') " << str.find("f") << endl; // weirdly  4294967295 (maybe max int but anyway means unfound)
+	cout << "str.find('aac') " << str.find("aac") << endl; //4294967295
+	cout << "str.find('aaa') " << str.find("aaa") << endl; // if found return index of first found match
+	cout << "str.find('kkk', 4) " << str.find("kkk", 4) << endl;//4294967295
+	
+	cout << str << endl;
+	regex reg("^k+");
+	smatch i;
+	cout << regex_search(str, i, reg) << endl ;
+	
+	regex reg2("k+$");
+	cout << regex_search(str, i, reg2) << endl ;
+	
 
 
 	return 0;
@@ -179,24 +212,24 @@ int test_strClass() {
 int main() {
 
 
-
+	/* In-class Examples 
+	
+	*/
 
 	//test_cin_cout();
-
 	//test_elvis();
-
-	test_strClass() ;
+	//test_strClass();
 
 
 
 	/*  Mission  :
-		
-	I decided to upgrade the test mission to a smart password entering // verifying system, 
+
+	I decided to upgrade the test mission to a smart password entering // verifying system,
 	and use the goto + labels to have an infinite looping process until success.
-		
+
 	*/
-	
-	//test_password();
+
+	test_password();
 
 
 }
