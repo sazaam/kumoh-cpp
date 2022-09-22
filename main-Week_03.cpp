@@ -89,7 +89,7 @@ int main() {
 
 
 //////////////////////////////////////////////// MISSION 1
-
+/*
 class Rectangle {
 public:
 	int width, height;
@@ -115,12 +115,12 @@ int main() {
 
 	return 1;
 }
-
+*/
 
 //////////////////////////////////////////////// MISSION 2
 
 
-/*
+
 class Rectangle {
 public:
 	int w, h;
@@ -129,7 +129,7 @@ public:
 	Rectangle();
 	Rectangle(int a);
 	Rectangle(int a, int b);
-
+	~Rectangle() { cout << "가로 " << w << " 세로 "<< h <<" 사각형 종료" << endl; };
 };
 // Describe once in each fallback way we need :
 // I want w/ no parameters
@@ -153,4 +153,4 @@ int main() {
 
 	return 1;
 }
-*/
+/**/
