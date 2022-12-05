@@ -9,6 +9,23 @@ using namespace std;
 
 /*
 
+	Exception Handling
+
+*/
+
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+
+using namespace std;
+
+/*
+
 	Vector of String Adding- Removing - Searching - Re-Ordering - FileSaving
 	Mission Week 12
 
@@ -58,17 +75,17 @@ int detectPresence(vector<string>& v, string s) {
 		if (v[i] == s) return i;
 	}
 
-	return 0;
+	return -1;
 }
 
 bool addToList(vector<string>& v, string s) {
 	int i = detectPresence(v, s);
 
-	if (!(bool)i) {
+	if (!(bool)(i+1)) {
 		v.push_back(s);
 		return true;
 	}
-	cout << "Exact Word already in list..." << endl ;
+	cout << "Exact Word already in list..." << endl;
 	return false;
 }
 
@@ -77,12 +94,12 @@ bool removeFromList(vector<string>& v, string s) {
 
 	int i = detectPresence(v, s);
 
-	if ((bool)i) {
+	if ((bool)(i+1)) {
 		v.erase(v.begin() + i);
 		cout << "word " + s + " was successfully removed." << endl;
 		return true;
 	}
-	
+
 	cout << "This word does not belong to the list." << endl;
 	return false;
 }
@@ -119,11 +136,11 @@ int main() {
 
 	bool success = loadWords(words, wordsFile); // Try Loading words file
 
-	string msg = success ? "Successfully opened file : " : "Error opening file : " ;
+	string msg = success ? "Successfully opened file : " : "Error opening file : ";
 	cout << msg << wordsFile << endl;
 
 	if (!success) return 0; // cancel program if failed
-	
+
 	// Menu Choices
 menu:
 
@@ -182,6 +199,21 @@ menu:
 
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
