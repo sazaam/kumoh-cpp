@@ -7,32 +7,87 @@
 
 using namespace std;
 
+/*
+
+	Vector of String Adding- Removing - Searching - Re-Ordering - FileSaving
+	Mission Week 12
+
+*/
+// UPGRADED TO INCLUDE ERASE FEATURE
 
 
-void fileRead(vector<string>& v, ifstream& fin) { // fin으로부터 벡터 v에 읽어 들임
+// read File Words into a vector of Strings
+void fileRead(vector<string>& v, ifstream& fin) { //
 	string line;
-	while (getline(fin, line)) { 	// fin 파일에서 한 라인 읽기
-		v.push_back(line); 			// 읽은 라인을 벡터에 저장
+	while (getline(fin, line)) { 	// 
+		v.push_back(line); 			// 
 	}
 }
-void fileWrite(vector<string>& v, ofstream& fout) { // fin으로부터 벡터 v에 읽어 들임
+
+// write into a vector of Strings into streamed file
+void fileWrite(vector<string>& v, ofstream& fout) { // 
 	int l = v.size();
 	for (int i = 0; i < l; i++) fout << v[i] << endl;
 }
 
-bool search(vector<string>& v, string word) { // 벡터 v에서 word를 찾아 출력
+// search for a specific strings
+bool search(vector<string>& v, string word) { // 
 	int c = 0;
 	for (int i = 0; i < v.size(); i++) {
 		int index = v[i].find(word);
-		if (index != -1) {// found
+		if (index != -1) { // found
 			cout << v[i] << endl;
 			c++;
 		}
 	}
-	return (bool) c;
+	return (bool)c;
 }
 
+// re-order words into array and display
+void sortAndPreview(vector<string>& v) {
+	sort(v.begin(), v.end());
+	int l = v.size();
+	for (int i = 0; i < l; i++) {
+		cout << v.at(i) << endl;
+	}
+}
 
+int detectPresence(vector<string>& v, string s) {
+	int l = v.size();
+	for (int i = 0; i < l; i++) {
+		if (v[i] == s) return i;
+	}
+
+	return 0;
+}
+
+bool addToList(vector<string>& v, string s) {
+	int i = detectPresence(v, s);
+
+	if (!(bool)i) {
+		v.push_back(s);
+		return true;
+	}
+	cout << "Exact Word already in list..." << endl ;
+	return false;
+}
+
+// remove specified word from vector
+bool removeFromList(vector<string>& v, string s) {
+
+	int i = detectPresence(v, s);
+
+	if ((bool)i) {
+		v.erase(v.begin() + i);
+		cout << "word " + s + " was successfully removed." << endl;
+		return true;
+	}
+	
+	cout << "This word does not belong to the list." << endl;
+	return false;
+}
+
+// save into file
 bool saveNewFile(vector<string>& v, string loc) {
 
 	ofstream fout;
@@ -45,12 +100,13 @@ bool saveNewFile(vector<string>& v, string loc) {
 	return true;
 }
 
-void sortAndPreview(vector<string>& v) {
-	sort(v.begin(), v.end());
-	int l = v.size();
-	for (int i = 0; i < l; i++) {
-		cout << v.at(i) << endl;
-	}
+// Loads file and tries reading contets as words
+bool loadWords(vector<string>& v, string wf) {
+	ifstream fin(wf);
+	if (!fin) { return false; }
+	fileRead(v, fin);
+	fin.close();
+	return true;
 }
 
 int main() {
@@ -61,58 +117,63 @@ int main() {
 	string wordsFile = dirname + filename + ext;
 	vector<string> words;
 
-	ifstream fin(wordsFile);
-	if (!fin) { cout << "Error Opening File : " << wordsFile << endl; return 0; }
+	bool success = loadWords(words, wordsFile); // Try Loading words file
 
+	string msg = success ? "Successfully opened file : " : "Error opening file : " ;
+	cout << msg << wordsFile << endl;
 
-	fileRead(words, fin); // 파일 전체를 wordVector에 라인 별로 읽기
-	fin.close();
+	if (!success) return 0; // cancel program if failed
+	
+	// Menu Choices
+menu:
 
-	cout << "Opened File :" << wordsFile << endl;
-
-
-	// Choices
-choice:
-
-	int ch;
+	int choice;
 	cout << "Choose an Action :" << endl
 		<< "	1. Add a word" << endl
 		<< "	2. Search for a word" << endl
-		<< "	3. Re-Order and Save" << endl
-		<< "	4. Terminate Program" << endl
+		<< "	3. Remove a word from List" << endl
+		<< "	4. Re-Order and Save" << endl
+		<< "	5. Terminate Program" << endl
 		<< endl;
-	cin >> ch;
+	cin >> choice;
 
-	string sss;
+	string wd;
 
-	switch (ch) {
+	switch (choice) {
 
-	case 1:
+	case 1:											// Adding a Word
 		cout << "Word to Add: " << endl;
-		cin >> sss;
-		
-		words.push_back(sss);
-		
-		goto choice;
+		cin >> wd;
+
+		(wd != "exit") && addToList(words, wd);
+
+		goto menu;									// Search for a word
 	case 2:
 		cout << "Word to Search : " << endl;
-		cin >> sss;
+		cin >> wd;
 
-		(sss != "exit") && search(words, sss);
+		(wd != "exit") && search(words, wd);
 
-		goto choice;
-	case 3:
+		goto menu;
+	case 3:											// Remove a Word
+		cout << "Word to Delete : " << endl;
+		cin >> wd;
+
+		(wd != "exit") && removeFromList(words, wd);
+
+		goto menu;
+	case 4:											// Re-order and Save
 		cout << "Previewing before Saving : " << endl;
 		bool save;
-		
+
 		sortAndPreview(words);
-		
+
 		cout << ">>>> save ? (1: Yes, 0: No)" << endl;
 		cin >> save;
 
-		save && saveNewFile(words, dirname + "new_" + filename + ext);
+		save&& saveNewFile(words, dirname + filename + "_sorted" + ext);
 
-		goto choice;
+		goto menu;
 	}
 
 
@@ -121,7 +182,6 @@ choice:
 
 	return 0;
 }
-
 
 
 
