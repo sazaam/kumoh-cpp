@@ -31,7 +31,7 @@ int main() {
 
 	*/
 
-	string loc = "C:\\Users\\user\\Desktop\\assets\\student.txt";
+	string loc = ".\\assets\\student.txt";
 
 	/*
 	

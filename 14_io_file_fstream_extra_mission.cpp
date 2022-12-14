@@ -112,7 +112,7 @@ bool loadWords(vector<string>& v, string wf) {
 
 int main() {
 
-	string dirname = "C:\\test\\";
+	string dirname = ".\\assets\\";
 	string filename = "words";
 	string ext = ".txt";
 	string wordsFile = dirname + filename + ext;

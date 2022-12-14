@@ -59,8 +59,8 @@ int main() {
 
 	// COPY EXAMPLE
 
-	const char* src = "C:\\test\\desert.jpg";
-	const char* dest = "C:\\test\\desert_copy.jpg";
+	const char* src = ".\\assets\\desert.jpg";
+	const char* dest = ".\\assets\\desert_copy.jpg";
 
 
 	ifstream fsrc(src, ios::in | ios::binary);
@@ -93,8 +93,8 @@ int main() {
 	/*
 
 	// COPY USING BUFFER EXAMPLE
-	const char* src = "C:\\test\\tulips.jpg";
-	const char* dest = "C:\\test\\tulips_copy.jpg";
+	const char* src = ".\\assets\\tulips.jpg";
+	const char* dest = ".\\assets\\tulips_copy.jpg";
 
 
 	ifstream fsrc(src, ios::in | ios::binary);
@@ -130,7 +130,7 @@ int main() {
 	
 
 	/*
-	const char* file = "C:\\test\\data.dat";
+	const char* file = ".\\assets\\data.dat";
 
 
 	// PREPARE FOR WRITING FILE
@@ -176,8 +176,8 @@ int main() {
 	/*
 	
 	// UNEXISTING FILE EXAMPLE & CHECKING FOR FILE INTEGRITY / CORRUPTION
-	const char* NOfile = "C:\\test\\nofile.jpg";
-	const char* YESfile = "C:\\test\\student.txt";
+	const char* NOfile = ".\\assets\\nofile.jpg";
+	const char* YESfile = ".\\assets\\student.txt";
 		
 
 	ifstream fin(NOfile, ios::in | ios::binary);
